@@ -1,0 +1,9 @@
+What does the assembly code do?
+-------------------------------
+All of the commands end with q because we are dealing with a quadword of memory
+Line 1: The assembly code first moves the value of x into register %rax
+Line 2: It multiplies x * 3 and stores in %rax
+Line 3: It adds 12 to (x * 3) and stores that in %rax
+Line 4: Multiplies (x * 3 + 12) * x and stores that in %rax
+Line 5: Subtracts 17 from (3x^2 + 12x) and stores result in %rax
+Final values stored in %rax is 3x^2 + 12x - 17

@@ -1,0 +1,67 @@
+Answer to Problem 3.63, CS:APP3e pp.314-315
+-------------------------------------------
+From the jump table, we can see that there are 6 quadwords of memory,
+and thus we will need 6 switch cases.
+
+The switch statement will start corresponding to line 5 of the machine
+code. This says to jump to a line according to the value that is stored
+in %rsi, which corresponds to n - 60 in decimal.
+
+The first statement, if (n - 60) = 0, will point to line 6 based on the jump
+table and will set %rax = x*8, and then will return the value in %rax
+
+The second statement, if (n - 60) = 1, will correspond to a jump to line
+17 and will set %rax = x + 75 in decimal. Then it will return
+
+The third statement, if (n - 60) = 2,
+will correspond to a jump to line
+6 again  and will set %rax = x * 8 in decimal. Then it will return
+
+The fourth statement, if (n - 60) - 3, will correspond to a jump to line
+9 and will set %rax = x >> 3, by arithmetic right shifting three times
+. Then it will return
+
+The fifth statement, if (n - 60) = 4, will correspond to a jump to line
+12, and will set %rax = x << 4, by left shifting four times. Then it will
+subtract %rax = %rax - x. Then it will set %rdi = %rax. Then it will multiply
+%rdi = %rdi * %rdi and then it will load %rax = rdi + 75. If rdi initially had
+x this corresponds to doing %rax = (x*2^4 - x)*(x*2^4 - x) + 75
+
+The sixth statement, if (n-60) = 5, will correspond to a jump to the line 16
+and will load %rax = x * x + 75
+
+In the default case (given by the ja statement), we will set %rax = x + 75
+
+Using this, we can build the c code as follows:
+long switch_prob( long x, long n)
+{
+    /*
+     * x in %rdi, n in %rsi
+     */
+    long result;
+    switch(n - 60)
+    {
+        case 0: /* Fallthrough, n - 60 = 0 */
+        case 2:
+            /* n - 60 = 2 */
+            result = x * 8;
+            break;
+        case 3:
+            /* n - 60 = 3 */
+            result = x >> 3;
+            break;
+        case 4:
+            /* n - 60 = 1 */
+            result = (x << 4) - x;
+            /* let it fall through to case 5 */
+        case 5:
+            /* n - 60 = 5 */
+            x *= x;
+            /* Fallthrough */
+        case 1: /* Fallthrough */
+        default:
+            /* if (n - 60) > 5 or < 0 */
+            result = x + 75;
+    }
+    return result;
+}

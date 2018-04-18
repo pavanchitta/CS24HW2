@@ -1,0 +1,10 @@
+Answers to Practice Problem 3.6, CS:APP3e pp.192-193
+----------------------------------------------------
+i) x + 6
+ii) x + y
+iii) x + 4y
+iv) 9x + 7
+v) 4y + 10  (0xA is hexadecimal for 10)
+vi) x + 2y + 9
+
+
