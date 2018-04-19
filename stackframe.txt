@@ -3,34 +3,38 @@ Stack Contents of fact(3)
 
 Address     Value               Description
 --------    --------            ------------------------------------
-0x1008      ret addr to main    after function finishes, must return to address
-                                where caller called from
---------------------------------------fact(3) called----------
-0x1000      3                   pushed %rdi value (1st argument) onto the stack
+0x1008      ret addr to main    After function finishes, must return to address
+                                where caller called from.
+--------------------------------Immediately after fact(3) called------
+0x1000      3                   Pushed %rdi value (1st argument) onto the stack
                                 in order to save the value for when the
                                 function returns and we need to pop off the
-                                value
-0x0ff8      0x2020              Address of fact_resume from call fact(2), which
-                                pushes the address of the next instruction on
-                                to the stack. This is the address the program
-                                continues from once fact has returned.
+                                value in fact_resume.
 --------------------------------------fact(2) called----------
-0x0ff0      2                   pushed %rdi value (1st argument) onto the stack
+0x0ff8      0x2020              This is the address of fact_resume from call
+                                fact(2), which pushes the address of the
+                                next instruction on to the stack. This is the
+                                address the program continues from once fact
+                                has returned.
+0x0ff0      2                   Pushed %rdi value (1st argument) onto the stack
                                 in order to save the value for when the
                                 function returns and we need to pop off the
-                                value
-0x0fe8      0x2020              Address of fact_resume from call fact(1), which
-                                pushes the address of the next instruction on
-                                to the stack. This is the address the program
-                                continues from once fact has returned.
+                                value in fact_resume.
 --------------------------------------fact(1) called----------
-0x0fe0      1                   pushed %rdi value (1st argument) onto the stack
+0x0fe8      0x2020              This is the address of fact_resume from call
+                                fact(1), which pushes the address of the
+                                next instruction on to the stack. This is the
+                                address the program continues from once fact
+                                has returned.
+0x0fe0      1                   Pushed %rdi value (1st argument) onto the stack
                                 in order to save the value for when the
                                 function returns and we need to pop off the
-                                value
-0x0fd8      0x2020              Address of fact_resume from call fact(0), which
-                                pushes the address of the next instruction on
-                                to the stack. This is the address the program
-                                continues from once fact has returned.
+                                value in fact_resume.
 --------------------------------------fact(0) called----------
+0x0fd8      0x2020              This is the address of fact_resume from call
+                                fact(0), which pushes the address of the
+                                next instruction on to the stack. This is the
+                                address the program continues from once fact
+                                has returned.
+
 #fact_return

@@ -8,31 +8,33 @@ code. This says to jump to a line according to the value that is stored
 in %rsi, which corresponds to n - 60 in decimal.
 
 The first statement, if (n - 60) = 0, will point to line 6 based on the jump
-table and will set %rax = x*8, and then will return the value in %rax
+table and will set %rax = x * 8, and then will return the value in %rax.
 
 The second statement, if (n - 60) = 1, will correspond to a jump to line
-17 and will set %rax = x + 75 in decimal. Then it will return
+17 and will set %rax = x + 75 in decimal. Then it will return.
 
-The third statement, if (n - 60) = 2,
-will correspond to a jump to line
-6 again  and will set %rax = x * 8 in decimal. Then it will return
+The third statement, if (n - 60) = 2, will correspond to a jump to line
+6 again  and will set %rax = x * 8 in decimal. Then it will return.
 
-The fourth statement, if (n - 60) - 3, will correspond to a jump to line
+The fourth statement, if (n - 60) = 3, will correspond to a jump to line
 9 and will set %rax = x >> 3, by arithmetic right shifting three times
-. Then it will return
+. Then it will return.
 
 The fifth statement, if (n - 60) = 4, will correspond to a jump to line
 12, and will set %rax = x << 4, by left shifting four times. Then it will
 subtract %rax = %rax - x. Then it will set %rdi = %rax. Then it will multiply
 %rdi = %rdi * %rdi and then it will load %rax = rdi + 75. If rdi initially had
-x this corresponds to doing %rax = (x*2^4 - x)*(x*2^4 - x) + 75
+x this corresponds to doing %rax = (x*2^4 - x)*(x*2^4 - x) + 75.
 
-The sixth statement, if (n-60) = 5, will correspond to a jump to the line 16
-and will load %rax = x * x + 75
+The sixth statement, if (n - 60) = 5, will correspond to a jump to the line 16
+and will load %rax = x * x + 75.
 
-In the default case (given by the ja statement), we will set %rax = x + 75
+In the default case (given by the ja statement), we will set %rax = x + 75.
 
-Using this, we can build the c code as follows:
+Since many of these cases overlap, the c switch block will allow cases
+to fall through to other overlapping cases. Using this, we can build the c
+code as follows:
+
 long switch_prob( long x, long n)
 {
     /*
@@ -41,26 +43,27 @@ long switch_prob( long x, long n)
     long result;
     switch(n - 60)
     {
-        case 0: /* Fallthrough, n - 60 = 0 */
+        /* Fall through, n - 60 = 0 */
+        case 0:
+        /* n - 60 = 2 */
         case 2:
-            /* n - 60 = 2 */
             result = x * 8;
             break;
+        /* n - 60 = 3 */
         case 3:
-            /* n - 60 = 3 */
             result = x >> 3;
             break;
+        /* n - 60 = 4 */
         case 4:
-            /* n - 60 = 1 */
             result = (x << 4) - x;
-            /* let it fall through to case 5 */
+        /* let it fall through to case 5 */
+        /* n - 60 = 5 */
         case 5:
-            /* n - 60 = 5 */
             x *= x;
-            /* Fallthrough */
-        case 1: /* Fallthrough */
+        /* Fall through */
+        case 1:
+        /* Fall through */
         default:
-            /* if (n - 60) > 5 or < 0 */
             result = x + 75;
     }
     return result;

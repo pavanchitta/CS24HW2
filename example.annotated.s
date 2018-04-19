@@ -16,10 +16,10 @@ ex:
 	movl	%ecx, -32(%rbp)
 	movl	-24(%rbp), %eax
 	subl	-28(%rbp), %eax   # Does the subtraction b - c
-	imull	-20(%rbp), %eax   # Does the multiplication a*(b - c)
+	imull	-20(%rbp), %eax   # Does the multiplication (a)*(b - c)
 	movl	%eax, %edx
 	movl	-32(%rbp), %eax
-	addl	%edx, %eax        # does the addition a*(b - c) + d
+	addl	%edx, %eax        # does the addition (a*(b - c)) + d
 	movl	%eax, -4(%rbp)
 	movl	-4(%rbp), %eax
 	popq	%rbp
