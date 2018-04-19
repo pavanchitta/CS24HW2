@@ -10,16 +10,16 @@ ex:
 	.cfi_offset 6, -16
 	movq	%rsp, %rbp
 	.cfi_def_cfa_register 6
-	movl	%edi, -20(%rbp)   # moving values from registers onto stack
+	movl	%edi, -20(%rbp)   # Moving values from registers onto stack
 	movl	%esi, -24(%rbp)
 	movl	%edx, -28(%rbp)
 	movl	%ecx, -32(%rbp)
 	movl	-24(%rbp), %eax
-	subl	-28(%rbp), %eax   # Does the subtraction b - c
-	imull	-20(%rbp), %eax   # Does the multiplication (a)*(b - c)
+	subl	-28(%rbp), %eax   # This does the subtraction b - c
+	imull	-20(%rbp), %eax   # This does the multiplication a * (b - c)
 	movl	%eax, %edx
 	movl	-32(%rbp), %eax
-	addl	%edx, %eax        # does the addition (a*(b - c)) + d
+	addl	%edx, %eax        # This does the addition (a * (b - c)) + d
 	movl	%eax, -4(%rbp)
 	movl	-4(%rbp), %eax
 	popq	%rbp

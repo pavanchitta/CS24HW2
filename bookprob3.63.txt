@@ -14,22 +14,26 @@ The second statement, if (n - 60) = 1, will correspond to a jump to line
 17 and will set %rax = x + 75 in decimal. Then it will return.
 
 The third statement, if (n - 60) = 2, will correspond to a jump to line
-6 again  and will set %rax = x * 8 in decimal. Then it will return.
+6 again and will set %rax = x * 8 in decimal. Then it will return.
 
 The fourth statement, if (n - 60) = 3, will correspond to a jump to line
-9 and will set %rax = x >> 3, by arithmetic right shifting three times
-. Then it will return.
+9 and will set %rax = x >> 3, by arithmetic right shifting three times.
+Then it will return.
 
 The fifth statement, if (n - 60) = 4, will correspond to a jump to line
 12, and will set %rax = x << 4, by left shifting four times. Then it will
 subtract %rax = %rax - x. Then it will set %rdi = %rax. Then it will multiply
-%rdi = %rdi * %rdi and then it will load %rax = rdi + 75. If rdi initially had
+%rdi = %rdi * %rdi and then it will load %rax = %rdi + 75. If rdi initially had
 x this corresponds to doing %rax = (x*2^4 - x)*(x*2^4 - x) + 75.
 
 The sixth statement, if (n - 60) = 5, will correspond to a jump to the line 16
 and will load %rax = x * x + 75.
 
 In the default case (given by the ja statement), we will set %rax = x + 75.
+
+Note that if n - 60 < 0, then in the machine code provided, this will
+lead to undefined behavior because we don't know what is at that address.
+In the C code below, however, it will go to the default case.
 
 Since many of these cases overlap, the c switch block will allow cases
 to fall through to other overlapping cases. Using this, we can build the c
@@ -51,6 +55,7 @@ long switch_prob( long x, long n)
             break;
         /* n - 60 = 3 */
         case 3:
+        /* long is signed, so arithmetic shift is done */
             result = x >> 3;
             break;
         /* n - 60 = 4 */

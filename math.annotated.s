@@ -1,4 +1,5 @@
-/* This file contains x86-64 assembly-language implementations of three
+/*
+ * This file contains x86-64 assembly-language implementations of three
  * basic, very common math operations.
  *
  * All these operations avoid the use of branching statements in their
@@ -9,8 +10,10 @@
  * to check a condition, and in a naive approach we would use jmp operations
  * based on what value an input takes on at run time. jmp also has two
  * operations, checking the condition and jumping, and this extra operation is
- * costly. Using jmp would also force the processor to use branch
- * prediction and this can be costly if it is gotten wrong, which can happen a
+ * costly.
+ *
+ * Using jmp would also force the processor to use branch prediction and
+ * this can be costly if it is gotten wrong, which can happen a
  * lot if there is no way to predict the condition accurately. Processors need
  * to be able to determine the sequence of instructions
  * to be executed beforehand so they can make the most use of pipelining.
@@ -23,7 +26,8 @@
  * prediction.
  */
 
- /* In all of these problems, we only have to use the lower 32-bit portions of
+ /*
+  * In all of these problems, we only have to use the lower 32-bit portions of
   * the registers because we are dealing with ints, but we don't have to worry
   * about setting the upper 32 bits to zero because this is done by the
   * assembler.
